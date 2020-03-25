@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Asteroids"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="350" Width="525"
+        FocusManager.FocusedElement="{Binding ElementName=MyCanvas}">
+    <Canvas Name="MyCanvas" KeyDown="Canvas_KeyDown" Focusable="True">
+        <Rectangle Name="rec1" Width="50" Height="50" Margin="0" Canvas.Left="10" Canvas.Top="10">
+
+            <Rectangle.Fill>
+                <SolidColorBrush Color="BlueViolet" />
+            </Rectangle.Fill>
+
+        </Rectangle>
+    </Canvas>
 </Window>

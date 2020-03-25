@@ -24,5 +24,25 @@ namespace Asteroids
         {
             InitializeComponent();
         }
+
+        private void Canvas_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Down && Canvas.GetTop(rec1) + rec1.Height < 420)
+            {
+                Canvas.SetTop(rec1, Canvas.GetTop(rec1) + 10);
+            }
+            else if (e.Key == Key.Up && Canvas.GetTop(rec1) > 0)
+            {
+                Canvas.SetTop(rec1, Canvas.GetTop(rec1) - 10);
+            }
+            else if (e.Key == Key.Left && Canvas.GetLeft(rec1) > 0)
+            {
+                Canvas.SetLeft(rec1, Canvas.GetLeft(rec1) - 10);
+            }
+            else if (e.Key == Key.Right && Canvas.GetLeft(rec1) + rec1.Width < 790)
+            {
+                Canvas.SetLeft(rec1, Canvas.GetLeft(rec1) + 10);
+            }
+        }
     }
 }
