@@ -43,6 +43,7 @@ namespace Asteroids
             {
                 Canvas.SetLeft(rec1, Canvas.GetLeft(rec1) + 10);
             }
+           
         }
     }
 }
