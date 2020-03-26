@@ -14,12 +14,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Asteroids
-{
+{   
+    //TESZT
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        int valami = 0;
         public MainWindow()
         {
             InitializeComponent();
