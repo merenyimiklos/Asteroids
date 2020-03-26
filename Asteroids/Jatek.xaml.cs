@@ -21,7 +21,7 @@ namespace Asteroids
     /// </summary>
     public partial class MainWindow : Window
     {
-        int valami = 0;
+        int valami = 10;
         public MainWindow()
         {
             InitializeComponent();
