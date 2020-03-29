@@ -6,14 +6,9 @@
         xmlns:local="clr-namespace:Asteroids"
         mc:Ignorable="d"
         Title="Asteroids" Height="350" Width="525"
-        FocusManager.FocusedElement="{Binding ElementName=MyCanvas}">
-    <Canvas Name="MyCanvas" KeyDown="Canvas_KeyDown" Focusable="True">
-        <Rectangle Name="rec1" Width="50" Height="50" Margin="0" Canvas.Left="10" Canvas.Top="10">
-
-            <Rectangle.Fill>
-                <SolidColorBrush Color="BlueViolet" />
-            </Rectangle.Fill>
-
-        </Rectangle>
+        FocusManager.FocusedElement="{Binding ElementName=MyCanvas}"
+        WindowState="Maximized">
+    <Canvas Name="MyCanvas" KeyDown="Canvas_KeyDown" Focusable="True" Background="Black">
+        <Image Name="hajo" Height="40" Width="60" Source="hajoJobbra.jpg" Canvas.Left="10" Canvas.Top="10"/>
     </Canvas>
 </Window>

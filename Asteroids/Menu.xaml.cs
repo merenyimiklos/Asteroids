@@ -24,15 +24,17 @@ namespace Asteroids
             InitializeComponent();
         }
 
-        private void buttonLeallitas_Click(object sender, RoutedEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            Close();
-        }
-
-        private void buttonElinditas_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow jatek = new MainWindow();
-            jatek.ShowDialog();
+            if (e.Key == Key.Space)
+            {
+                MainWindow jatek = new MainWindow();
+                jatek.ShowDialog();
+            }
+            if (e.Key == Key.Escape)
+            {
+                Close();
+            }
         }
     }
 }

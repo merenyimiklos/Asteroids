@@ -22,6 +22,7 @@ namespace Asteroids
     public partial class MainWindow : Window
     {
         int valami = 10;
+        String merreFordul = "";
         public MainWindow()
         {
             InitializeComponent();
@@ -29,22 +30,32 @@ namespace Asteroids
 
         private void Canvas_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Down && Canvas.GetTop(rec1) + rec1.Height < 420)
+            if (e.Key == Key.Down && Canvas.GetTop(hajo) + hajo.Height < 420)
             {
-                Canvas.SetTop(rec1, Canvas.GetTop(rec1) + 10);
+                Canvas.SetTop(hajo, Canvas.GetTop(hajo) + 10);
+                hajo.Source = new BitmapImage(new Uri("hajoLe.jpg", UriKind.RelativeOrAbsolute));
+                merreFordul = "le";
             }
-            else if (e.Key == Key.Up && Canvas.GetTop(rec1) > 0)
+            else if (e.Key == Key.Up && Canvas.GetTop(hajo) > 0)
             {
-                Canvas.SetTop(rec1, Canvas.GetTop(rec1) - 10);
+                Canvas.SetTop(hajo, Canvas.GetTop(hajo) - 10);
+                hajo.Source = new BitmapImage(new Uri("hajoFel.jpg", UriKind.RelativeOrAbsolute));
+                merreFordul = "fel";
             }
-            else if (e.Key == Key.Left && Canvas.GetLeft(rec1) > 0)
+            else if (e.Key == Key.Left && Canvas.GetLeft(hajo) > 0)
             {
-                Canvas.SetLeft(rec1, Canvas.GetLeft(rec1) - 10);
+                Canvas.SetLeft(hajo, Canvas.GetLeft(hajo) - 10);
+                hajo.Source = new BitmapImage(new Uri("hajoBalra.jpg", UriKind.RelativeOrAbsolute));
+                merreFordul = "balra";
             }
-            else if (e.Key == Key.Right && Canvas.GetLeft(rec1) + rec1.Width < 790)
+            else if (e.Key == Key.Right && Canvas.GetLeft(hajo) + hajo.Width < 790)
             {
-                Canvas.SetLeft(rec1, Canvas.GetLeft(rec1) + 10);
+                Canvas.SetLeft(hajo, Canvas.GetLeft(hajo) + 10);
+                hajo.Source = new BitmapImage(new Uri("hajoJobbra.jpg", UriKind.RelativeOrAbsolute));
+                merreFordul = "jobbra";
             }
+            else if (e.Key == Key.Escape)
+                Close();
            
         }
     }
