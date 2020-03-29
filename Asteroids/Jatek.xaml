@@ -10,5 +10,6 @@
         WindowState="Maximized">
     <Canvas Name="MyCanvas" KeyDown="Canvas_KeyDown" Focusable="True" Background="Black">
         <Image Name="hajo" Height="40" Width="60" Source="hajoJobbra.jpg" Canvas.Left="10" Canvas.Top="10"/>
+        <Button x:Name="button" Content="Mentés" Canvas.Left="156" Canvas.Top="50" Width="75" Click="button_Click"/>
     </Canvas>
 </Window>

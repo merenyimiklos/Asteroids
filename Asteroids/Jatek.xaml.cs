@@ -13,8 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using FireSharp.Config;
+using FireSharp.Interfaces;
+using FireSharp.Response;
+
 namespace Asteroids
-{   
+{
     //TESZT
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,8 +27,18 @@ namespace Asteroids
     {
         int valami = 10;
         String merreFordul = "";
+
+        IFirebaseConfig firebaseConfig = new FirebaseConfig
+        {
+            AuthSecret = "exgxivog1ZOUP0dsczcfx6k5tjhxlpj8qX7SM4PQ",
+            BasePath = "https://asteroids-1fadb.firebaseio.com/"
+        };
+
+        IFirebaseClient client;
+
         public MainWindow()
         {
+            client = new FireSharp.FirebaseClient(firebaseConfig);
             InitializeComponent();
         }
 
@@ -57,6 +71,20 @@ namespace Asteroids
             else if (e.Key == Key.Escape)
                 Close();
            
+        }
+
+        private async void button_Click(object sender, RoutedEventArgs e)
+        {
+            var data = new Data
+            {
+                Id = "1",
+                Name = "Miki",
+                Score = 1
+            };
+
+            SetResponse response = await client.SetAsync("Felhasználók/" + "1", data);
+            Data result = response.ResultAs<Data>();
+
         }
     }
 }
