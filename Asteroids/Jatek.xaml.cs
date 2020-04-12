@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Windows.Threading;
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
@@ -25,7 +26,6 @@ namespace Asteroids
     /// </summary>
     public partial class MainWindow : Window
     {
-        int valami = 10;
         String merreFordul = "";
 
         IFirebaseConfig firebaseConfig = new FirebaseConfig
@@ -40,51 +40,156 @@ namespace Asteroids
         {
             client = new FireSharp.FirebaseClient(firebaseConfig);
             InitializeComponent();
+            timer.Interval = TimeSpan.FromSeconds(0.1);
+            timer.Tick += Animation;
+            
+            
         }
 
-        private void Canvas_KeyDown(object sender, KeyEventArgs e)
+        DispatcherTimer timer = new DispatcherTimer();
+
+        List<Asteroid> asteroids = new List<Asteroid>();
+        
+        SpaceShip spaceShip;
+
+        List<LaserShooting> laserShootings = new List<LaserShooting>();
+
+        List<GameObject> gameObject = new List<GameObject>();
+
+        
+        void Animation(object sender, EventArgs e)
         {
-            if (e.Key == Key.Down && Canvas.GetTop(hajo) + hajo.Height < 420)
+            List<LaserShooting> laserShootingsOverTheEdge = new List<LaserShooting>();
+            foreach (var s in gameObject)
             {
-                Canvas.SetTop(hajo, Canvas.GetTop(hajo) + 10);
-                hajo.Source = new BitmapImage(new Uri("hajoLe.jpg", UriKind.RelativeOrAbsolute));
-                merreFordul = "le";
+                bool overTheEdge = s.Animation(timer.Interval, drawingArea);
+                if (s is LaserShooting && overTheEdge)
+                {
+                    laserShootingsOverTheEdge.Add((LaserShooting)s);
+                }
             }
-            else if (e.Key == Key.Up && Canvas.GetTop(hajo) > 0)
+            foreach (var laser in laserShootingsOverTheEdge)
             {
-                Canvas.SetTop(hajo, Canvas.GetTop(hajo) - 10);
-                hajo.Source = new BitmapImage(new Uri("hajoFel.jpg", UriKind.RelativeOrAbsolute));
-                merreFordul = "fel";
+                laserShootings.Remove(laser);
+                gameObject.Remove(laser);
             }
-            else if (e.Key == Key.Left && Canvas.GetLeft(hajo) > 0)
+            //gameObject.ForEach(s => s.Animation(timer.Interval, drawingArea));
+
+            List<Asteroid> deletedAsteroids = new List<Asteroid>();
+            List<LaserShooting> deletedLasers = new List<LaserShooting>();
+            foreach (Asteroid asteroid in asteroids)
             {
-                Canvas.SetLeft(hajo, Canvas.GetLeft(hajo) - 10);
-                hajo.Source = new BitmapImage(new Uri("hajoBalra.jpg", UriKind.RelativeOrAbsolute));
-                merreFordul = "balra";
+                foreach (LaserShooting laser in laserShootings)
+                {
+                    if (asteroid.ContainsPoint(laser.X, laser.Y))
+                    {
+                        deletedAsteroids.Add(asteroid);
+                        deletedLasers.Add(laser);
+                    }
+                }
             }
-            else if (e.Key == Key.Right && Canvas.GetLeft(hajo) + hajo.Width < 790)
+            asteroids = asteroids.Except(deletedAsteroids).ToList();
+            gameObject = gameObject.Except(deletedAsteroids).ToList();
+            foreach (var laser in deletedLasers)
             {
-                Canvas.SetLeft(hajo, Canvas.GetLeft(hajo) + 10);
-                hajo.Source = new BitmapImage(new Uri("hajoJobbra.jpg", UriKind.RelativeOrAbsolute));
-                merreFordul = "jobbra";
+                laserShootings.Remove(laser);
+                gameObject.Remove(laser);
             }
-            else if (e.Key == Key.Escape)
-                Close();
-           
+
+            drawingArea.Children.Clear();
+
+            foreach (var s in gameObject)
+            {
+                s.Draw(drawingArea);
+            }
+
+            bool defeated = false;
+
+            foreach (var asteroid in asteroids)
+            {
+                if(asteroid.ContainsPoint(spaceShip.X, spaceShip.Y))
+                {
+                    defeated = true;
+                    break;
+                }
+            }
+            if (defeated)
+            {
+                MessageBox.Show("Vesztettél!");
+                asteroids.Clear();
+                laserShootings.Clear();
+                gameObject.Clear();
+                gameObject.Add(spaceShip);
+
+                for (int i = 0; i < 10; i++)
+                {
+                    asteroids.Add(new Asteroid(drawingArea));
+                    gameObject.Add(asteroids.Last());
+                }
+            }
         }
 
-        private async void button_Click(object sender, RoutedEventArgs e)
+        private void buttonStart_Click(object sender, RoutedEventArgs e)
         {
-            var data = new Data
+            buttonStart.IsEnabled = false;
+
+            for (int i = 0; i < 10; i++)
             {
-                Id = "1",
-                Name = "Miki",
-                Score = 1
-            };
+                asteroids.Add(new Asteroid(drawingArea));
+                gameObject.Add(asteroids.Last());
+            }
 
-            SetResponse response = await client.SetAsync("Felhasználók/" + "1", data);
-            Data result = response.ResultAs<Data>();
+            spaceShip = new SpaceShip(drawingArea);
+            gameObject.Add(spaceShip);
 
+            timer.Start();
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (timer.IsEnabled)
+            {
+                switch (e.Key)
+                {
+                    case Key.Left:
+                    case Key.A:
+                        spaceShip.TurnLeft(true);
+                        break;
+                    case Key.Right:
+                    case Key.D:
+                        spaceShip.TurnLeft(false);
+                        break;
+                    case Key.Up:
+                    case Key.W:
+                        spaceShip.Accelerate(true);
+                        break;
+                    case Key.Down:
+                    case Key.S:
+                        spaceShip.Accelerate(false);
+                        break;
+                    case Key.Space:
+                        laserShootings.Add(new LaserShooting(spaceShip));
+                        gameObject.Add(laserShootings.Last());
+                        break;
+                }
+            }
+        }
+
+
+
+
+        //private async void button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var data = new Data
+        //    {
+        //        Id = "1",
+        //        Name = "Miki",
+        //        Score = 1
+        //    };
+
+        //    SetResponse response = await client.SetAsync("Felhasználók/" + "1", data);
+        //    Data result = response.ResultAs<Data>();
+
+        //}
     }
 }

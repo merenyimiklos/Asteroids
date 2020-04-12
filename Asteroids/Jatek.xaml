@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Asteroids"
         mc:Ignorable="d"
-        Title="Asteroids" Height="350" Width="525"
-        FocusManager.FocusedElement="{Binding ElementName=MyCanvas}"
-        WindowState="Maximized">
-    <Canvas Name="MyCanvas" KeyDown="Canvas_KeyDown" Focusable="True" Background="Black">
-        <Image Name="hajo" Height="40" Width="60" Source="hajoJobbra.jpg" Canvas.Left="10" Canvas.Top="10"/>
-        <Button x:Name="button" Content="Mentés" Canvas.Left="156" Canvas.Top="50" Width="75" Click="button_Click"/>
-    </Canvas>
+        Title="Asteroids" Height="376" Width="525" Background="Black"
+        KeyDown="Window_KeyDown">
+    <Grid>
+        <Canvas Name="drawingArea" HorizontalAlignment="Left" Height="258" Background="Black"
+            Margin="31,37,0,0" VerticalAlignment="Top" Width="450"/>
+        <Button x:Name="buttonStart" Content="Start!" VerticalAlignment="Top"
+                HorizontalAlignment="Left" Canvas.Left="7" Canvas.Top="277" Width="75" Click="buttonStart_Click"/>
+    </Grid>
 </Window>

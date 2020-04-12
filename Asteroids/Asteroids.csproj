@@ -87,6 +87,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="Jatek.xaml.cs">
       <DependentUpon>Jatek.xaml</DependentUpon>
       <SubType>Code</SubType>
