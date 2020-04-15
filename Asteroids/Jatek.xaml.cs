@@ -20,13 +20,14 @@ using FireSharp.Response;
 
 namespace Asteroids
 {
-    //TESZT
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        String merreFordul = "";
+        DispatcherTimer timer = new DispatcherTimer();                  //timer
+        List<Asteroid> asteroids = new List<Asteroid>();                //aszteroidák listája
+        SpaceShip spaceShip;                                            //ürhajó változó
+        List<LaserShooting> laserShootings = new List<LaserShooting>(); //lövedék kilövésének a listája
+        List<GameObject> gameObject = new List<GameObject>();      //gameObject lista 
+        IFirebaseClient client;                                    //Firebase változó
 
         IFirebaseConfig firebaseConfig = new FirebaseConfig
         {
@@ -34,7 +35,7 @@ namespace Asteroids
             BasePath = "https://asteroids-1fadb.firebaseio.com/"
         };
 
-        IFirebaseClient client;
+        
 
         public MainWindow()
         {
@@ -45,18 +46,7 @@ namespace Asteroids
             
             
         }
-
-        DispatcherTimer timer = new DispatcherTimer();
-
-        List<Asteroid> asteroids = new List<Asteroid>();
-        
-        SpaceShip spaceShip;
-
-        List<LaserShooting> laserShootings = new List<LaserShooting>();
-
-        List<GameObject> gameObject = new List<GameObject>();
-
-        
+        //animációk (aszteroidákhoz érés -> gameover, lövések eltűnése, ha a képernyő végére ér, hajó forgás)
         void Animation(object sender, EventArgs e)
         {
             List<LaserShooting> laserShootingsOverTheEdge = new List<LaserShooting>();
@@ -128,7 +118,7 @@ namespace Asteroids
                 }
             }
         }
-
+        //játék ideiglenes elindítása
         private void buttonStart_Click(object sender, RoutedEventArgs e)
         {
             buttonStart.IsEnabled = false;
@@ -144,7 +134,7 @@ namespace Asteroids
 
             timer.Start();
         }
-
+        //gomb lenyomás vezérlés
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (timer.IsEnabled)
@@ -176,7 +166,7 @@ namespace Asteroids
         }
 
 
-
+        //Ez lesz majd a firebase elmentés
 
         //private async void button_Click(object sender, RoutedEventArgs e)
         //{

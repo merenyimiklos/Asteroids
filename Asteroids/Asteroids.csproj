@@ -131,12 +131,6 @@
   <ItemGroup>
     <Resource Include="hatter.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="hajoBalra.jpg" />
-    <Resource Include="hajoFel.jpg" />
-    <Resource Include="hajoJobbra.jpg" />
-    <Resource Include="hajoLe.jpg" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">

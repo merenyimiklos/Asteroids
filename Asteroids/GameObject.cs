@@ -28,11 +28,13 @@ namespace Asteroids
         public double VY
         { get { return vy; } set { vy = value; } }
 
+        //konstruktor
         public GameObject(double x, double y)
         {
             this.x = x;
             this.y = y;
         }
+        //konstruktor
         public GameObject(double x, double y, double vx, double vy)
         {
             this.x = x;
@@ -40,7 +42,7 @@ namespace Asteroids
             this.vx = vx;
             this.vy = vy;
         }
-
+        //rajzolás methódus
         public abstract void Draw(Canvas drawingArea);
 
         //igaz, amikor kimegy a képernyőröl
@@ -73,7 +75,10 @@ namespace Asteroids
             return overTheEdge;
         }
     }
-
+    /// <summary>
+    /// asteroid osztály
+    /// itt hozzuk létre az asteroidákat és állítjuk be, hogy milyen formájuak legyenek + a színüket
+    /// </summary>
     class Asteroid : GameObject
     {
         static Random random = new Random();
@@ -107,7 +112,10 @@ namespace Asteroids
             return asteroids.RenderedGeometry.FillContains(new System.Windows.Point(x - X, y - Y));
         }
     }
-
+    /// <summary>
+    /// spaceship osztály
+    /// itt állítjuk be, hogy milyen színü + formájú legyen az űrhajó + itt rajzolódik is ki
+    /// </summary>
     class SpaceShip : GameObject
     {
         Polygon ship = new Polygon();
@@ -145,7 +153,9 @@ namespace Asteroids
             VY *= faktor;
         }
     }
-
+    /// <summary>
+    /// lövedékek generálása stb stb
+    /// </summary>
     class LaserShooting : GameObject
     {
         public LaserShooting(SpaceShip spaceShip)
