@@ -11,6 +11,11 @@
         <Canvas Name="drawingArea" HorizontalAlignment="Left" Height="258" Background="Black"
             Margin="31,37,0,0" VerticalAlignment="Top" Width="450"/>
         <Button x:Name="buttonStart" Content="Start!" VerticalAlignment="Top"
-                HorizontalAlignment="Left" Canvas.Left="7" Canvas.Top="277" Width="75" Click="buttonStart_Click"/>
+                HorizontalAlignment="Left" Canvas.Left="7" Canvas.Top="277" Width="75" Click="buttonStart_Click" Margin="0,4,0,0"
+                IsEnabled="{Binding ElementName=textBoxName,Path=Text.Length}"/>
+        <Label x:Name="labelScore" Foreground="Red" Content="Pont: 0" HorizontalAlignment="Left" Margin="322,2,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.711,0.731" Width="77"/>
+        <Label x:Name="labelLife" Foreground="Red" Content="Élet: 3" HorizontalAlignment="Left" Margin="404,2,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.711,0.731" Width="77"/>
+        <TextBox x:Name="textBoxName" TextAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="217,5,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="88" />
+        <TextBox x:Name="textBoxId" TextAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="94,5,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="106" />
     </Grid>
 </Window>

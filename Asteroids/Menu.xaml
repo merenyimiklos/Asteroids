@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Asteroids"
         mc:Ignorable="d"
         Title="Asteroids" Height="350" Width="525" KeyDown="Window_KeyDown"
-        WindowState="Maximized">
+        >
     <Window.Background>
         <ImageBrush>
             <ImageBrush.ImageSource>

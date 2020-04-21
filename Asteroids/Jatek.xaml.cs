@@ -29,6 +29,9 @@ namespace Asteroids
         List<GameObject> gameObject = new List<GameObject>();      //gameObject lista 
         IFirebaseClient client;                                    //Firebase változó
 
+        int pont = 0;
+        int elet = 3;
+
         IFirebaseConfig firebaseConfig = new FirebaseConfig
         {
             AuthSecret = "exgxivog1ZOUP0dsczcfx6k5tjhxlpj8qX7SM4PQ",
@@ -73,8 +76,10 @@ namespace Asteroids
                 {
                     if (asteroid.ContainsPoint(laser.X, laser.Y))
                     {
+                        pont++;
                         deletedAsteroids.Add(asteroid);
                         deletedLasers.Add(laser);
+                        labelScore.Content = "Pont: " + pont;
                     }
                 }
             }
@@ -99,23 +104,37 @@ namespace Asteroids
             {
                 if(asteroid.ContainsPoint(spaceShip.X, spaceShip.Y))
                 {
-                    defeated = true;
-                    break;
+                    elet--;
+                    labelLife.Content = "Élet:" + elet;
+                    switch (elet)
+                    {
+                        case 2:
+                        case 1:
+                            defeated = false;
+                            break;
+                        case 0:
+                            defeated = true;
+                            break;
+                    }
+                    
                 }
             }
             if (defeated)
             {
-                MessageBox.Show("Vesztettél!");
+                MessageBox.Show("Vesztettél!\nPontod:" + pont);
                 asteroids.Clear();
                 laserShootings.Clear();
                 gameObject.Clear();
                 gameObject.Add(spaceShip);
-
+                FireBaseDataSave();
+                Close();
+                /*
                 for (int i = 0; i < 10; i++)
                 {
                     asteroids.Add(new Asteroid(drawingArea));
                     gameObject.Add(asteroids.Last());
                 }
+                */
             }
         }
         //játék ideiglenes elindítása
@@ -168,18 +187,18 @@ namespace Asteroids
 
         //Ez lesz majd a firebase elmentés
 
-        //private async void button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var data = new Data
-        //    {
-        //        Id = "1",
-        //        Name = "Miki",
-        //        Score = 1
-        //    };
+        private async void FireBaseDataSave()
+        {
+            var data = new Data
+            {
+                Id = textBoxId.Text,
+                Name = textBoxName.Text,
+                Score = pont
+            };
 
-        //    SetResponse response = await client.SetAsync("Felhasználók/" + "1", data);
-        //    Data result = response.ResultAs<Data>();
+            SetResponse response = await client.SetAsync("Felhasználók/" + textBoxId.Text, data);
+            Data result = response.ResultAs<Data>();
 
-        //}
+        }
     }
 }
