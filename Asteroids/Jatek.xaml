@@ -15,7 +15,9 @@
                 IsEnabled="{Binding ElementName=textBoxName,Path=Text.Length}"/>
         <Label x:Name="labelScore" Foreground="Red" Content="Pont: 0" HorizontalAlignment="Left" Margin="322,2,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.711,0.731" Width="77"/>
         <Label x:Name="labelLife" Foreground="Red" Content="Élet: 3" HorizontalAlignment="Left" Margin="404,2,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.711,0.731" Width="77"/>
-        <TextBox x:Name="textBoxName" TextAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="217,5,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="88" />
-        <TextBox x:Name="textBoxId" TextAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="94,5,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="106" />
+        <TextBox x:Name="textBoxName" TextAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="234,5,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="68" />
+        <TextBox x:Name="textBoxId" TextAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="121,5,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="54" />
+        <Label x:Name="labelValami1" Foreground="Red" Content="ID:" HorizontalAlignment="Left" Margin="91,4,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.711,0.731" Width="30"/>
+        <Label x:Name="labelValami1_Copy" Foreground="Red" Content="Név:" HorizontalAlignment="Left" Margin="191,4,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.711,0.731" Width="43"/>
     </Grid>
 </Window>
